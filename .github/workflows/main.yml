@@ -11,6 +11,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
     steps:
       - uses: actions/checkout@v1
       - name: npm install dependencies
