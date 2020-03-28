@@ -16,9 +16,9 @@ package:
   individually: true
   exclude:
     - ./**
-function:
-  flickr-api:
-    name: get-flickr-photos
+functions:
+  index:
+    name: get_flickr_photos
     handler: index.handler
     timeout: 240
     package:
@@ -26,11 +26,10 @@ function:
         - index.js
         - src/**
         - node_modules/**
-    tags:
-      owner: ALONSO
-      Inventory: Lambda
     events:
       - http:
           path: photos
           method: post
           cors: true
+    environment:
+      FLICKR_API_KEY: ${env:FLICKR_API_KEY}
