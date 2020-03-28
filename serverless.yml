@@ -4,14 +4,18 @@ provider:
   name: aws
   runtime: nodejs10.x
   stage: dev
-  region: us-west-1
+  region: us-east-1
   versionFunctions: true
   vpc:
     securityGroupIds:
-      - sg-8d2b81fd
+      - sg-c18f63ed
     subnetIds:
-      - subnet-7065b916
-      - subnet-78638b22
+      - subnet-2142ae47
+      - subnet-53cc240c
+      - subnet-a123c980
+      - subnet-abf9ca95
+      - subnet-e78f30aa
+      - subnet-fed372f0
 package:
   individually: true
   exclude:
