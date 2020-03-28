@@ -5,8 +5,8 @@ module.exports = async event => {
   const { FLICKR_API_KEY: api_key } = process.env;
 
   const body = JSON.parse(event.body);
-  const { text } = body;
-
+  const { text = '' } = body;
+  if (!text) return httpResponse.badRequest('Text field is empty', httpResponse.TYPE.MESSAGE);
   const {
     data: {
       photos: { photo }
