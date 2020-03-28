@@ -1,0 +1,36 @@
+service: flickr-challenge-api
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: us-west-1
+  versionFunctions: true
+  vpc:
+    securityGroupIds:
+      - sg-8d2b81fd
+    subnetIds:
+      - subnet-7065b916
+      - subnet-78638b22
+package:
+  individually: true
+  exclude:
+    - ./**
+function:
+  flickr-api:
+    name: get-flickr-photos
+    handler: index.handler
+    timeout: 240
+    package:
+      include:
+        - index.js
+        - src/**
+        - node_modules/**
+    tags:
+      owner: ALONSO
+      Inventory: Lambda
+    events:
+      - http:
+          path: photos
+          method: post
+          cors: true
