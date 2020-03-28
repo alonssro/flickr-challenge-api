@@ -29,10 +29,20 @@ module.exports = async event => {
         nojsoncallback: 1
       }
     });
-    response = httpResponse.ok(photo, httpResponse.TYPE.JSON);
+    response = httpResponse.ok(photo, httpResponse.TYPE.JSON, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true
+    });
   } catch (error) {
     console.log(error);
-    response = httpResponse.internalServerError(`Something went wrong: ${error}`);
+    response = httpResponse.internalServerError(
+      `Something went wrong: ${error}`,
+      httpResponse.TYPE.MESSAGE,
+      {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      }
+    );
   }
 
   return response;
