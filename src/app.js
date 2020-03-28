@@ -3,7 +3,7 @@ const httpResponse = require('./utils/httpResponse');
 
 module.exports = async event => {
   const { FLICKR_API_KEY: api_key } = process.env;
-
+  let response;
   console.log('Starting  process');
 
   const body = JSON.parse(event.body);
@@ -15,20 +15,25 @@ module.exports = async event => {
 
   console.log('Making request to Flickr photos');
 
-  const {
-    data: {
-      photos: { photo }
-    }
-  } = await flickrApi.get('/', {
-    params: {
-      api_key,
-      text,
-      method: 'flickr.photos.search',
-      format: 'json',
-      nojsoncallback: 1
-    }
-  });
+  try {
+    const {
+      data: {
+        photos: { photo }
+      }
+    } = await flickrApi.get('/', {
+      params: {
+        api_key,
+        text,
+        method: 'flickr.photos.search',
+        format: 'json',
+        nojsoncallback: 1
+      }
+    });
+    response = httpResponse.ok(photo, httpResponse.TYPE.JSON);
+  } catch (error) {
+    console.log(error);
+    response = httpResponse.internalServerError(`Something went wrong: ${error}`);
+  }
 
-  console.log('Result Photos', photo);
-  return httpResponse.ok(photo, httpResponse.TYPE.JSON);
+  return response;
 };
