@@ -5,17 +5,13 @@ provider:
   runtime: nodejs10.x
   stage: dev
   region: us-east-1
+  role: arn:aws:iam::733317892132:role/lambda_vpc_basic_execution
   versionFunctions: true
   vpc:
     securityGroupIds:
-      - sg-c18f63ed
+      - sg-085a3d2d54cbfec2d
     subnetIds:
-      - subnet-2142ae47
-      - subnet-53cc240c
-      - subnet-a123c980
-      - subnet-abf9ca95
-      - subnet-e78f30aa
-      - subnet-fed372f0
+      - subnet-05f7737d2791ebc4f
 package:
   individually: true
   exclude:
