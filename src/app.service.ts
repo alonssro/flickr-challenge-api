@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
+import * as parser from 'xml2json';
 import {
   Injectable,
   HttpService,
@@ -37,5 +38,16 @@ export class AppService {
       })
       .toPromise();
     return photo;
+  }
+
+  async getPublicFeed() {
+    const { data }: any = await this.httpService
+      .get('https://www.flickr.com/services/feeds/photos_public.gne', {})
+      .toPromise();
+    const {
+      feed: { entry },
+    } = JSON.parse(parser.toJson(data));
+
+    return entry;
   }
 }

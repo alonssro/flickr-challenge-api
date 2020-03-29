@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { FlickrSearchDto } from './dto/flickr-search.dto';
 
@@ -9,5 +9,10 @@ export class AppController {
   @Post('/photos')
   getFlickrPhotos(@Body() flickrPhoto: FlickrSearchDto): Promise<object> {
     return this.appService.getFlickrPhotos(flickrPhoto);
+  }
+
+  @Get('/')
+  getPublicFeed(): Promise<object> {
+    return this.appService.getPublicFeed();
   }
 }
