@@ -36,7 +36,6 @@ export class AppService {
         },
       })
       .toPromise();
-
     return photo;
   }
 }
