@@ -7,7 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post('/photos')
-  getFlickrPhotos(@Body() createCatDto: FlickrSearchDto): Promise<object> {
-    return this.appService.getFlickrPhotos(createCatDto);
+  getFlickrPhotos(@Body() flickrPhoto: FlickrSearchDto): Promise<object> {
+    return this.appService.getFlickrPhotos(flickrPhoto);
   }
 }

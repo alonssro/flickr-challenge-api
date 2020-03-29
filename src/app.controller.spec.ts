@@ -1,6 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+export class FlickrSearchDto {
+  text: string;
+}
 
 describe('AppController', () => {
   let appController: AppController;
@@ -15,8 +18,10 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    const flickrSearch = new FlickrSearchDto();
+    flickrSearch.text = 'People';
+    it('should return an "object"', () => {
+      expect(appController.getFlickrPhotos(flickrSearch)).toBe(Object);
     });
   });
 });
