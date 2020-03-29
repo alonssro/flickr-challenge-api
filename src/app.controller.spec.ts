@@ -1,22 +1,50 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AppModule } from './app.module';
+import { HttpService, HttpModule, INestApplication } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
+import * as request from 'supertest';
 
-describe('AppController', () => {
-  let appController: AppController;
+export class FlickrSearchDto {
+  text: string;
+}
+
+describe('AppService', () => {
+  let app: INestApplication;
+  let httpService: HttpService;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
+    const testAppModule: TestingModule = await Test.createTestingModule({
+      imports: [AppModule, HttpModule, ConfigModule.forRoot()],
       providers: [AppService],
+      controllers: [AppController],
     }).compile();
-
-    appController = app.get<AppController>(AppController);
+    app = testAppModule.createNestApplication();
+    httpService = testAppModule.get<HttpService>(HttpService);
+    await app.init();
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return an "array of objects"', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/photos')
+        .send({ text: 'people' })
+        .expect(201);
+
+      expect(response.body).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            id: expect.any(String),
+          }),
+        ]),
+      );
+    });
+    it('should return 400', async () => {
+      await request(app.getHttpServer())
+        .post('/photos')
+        .send()
+        .expect(400);
     });
   });
 });
