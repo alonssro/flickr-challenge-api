@@ -11,7 +11,7 @@ export class AppController {
     return this.appService.getFlickrPhotos(flickrPhoto);
   }
 
-  @Get('/')
+  @Get('/feed')
   getPublicFeed(): Promise<object> {
     return this.appService.getPublicFeed();
   }
